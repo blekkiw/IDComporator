@@ -18,14 +18,19 @@ public class Main {
         }
 
         if (!compares.contains(false)) {
-            System.out.println("Files are identical");
+            identical();
         } else {
-            System.out.println("Files are different");
+            different();
         }
 
     }
 
-
+private static void identical () {
+        JOptionPane.showMessageDialog(null,"Files are identical", "identical", JOptionPane.INFORMATION_MESSAGE );
+}
+private static void different () {
+        JOptionPane.showMessageDialog(null,"Files are different", "different", JOptionPane.ERROR_MESSAGE );
+}
 
     private static String [] fileScanner (String path) {
         File dir = new File(path);
