@@ -80,14 +80,15 @@ public class Main {
 //        }
         BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int count;
+        byte[] buffer = new byte[100];
+
         // reading and writing
-        while ((count = bufferedInputStream.read(buffer)) != -1) {
-            baos.write(buffer, 0, count);
+        while ((bufferedInputStream.read(buffer)) != -1) {
+
             result+=Arrays.toString(buffer);
-            baos.reset();
+
         }
+
 bufferedInputStream.close();
         System.out.println("from file:" + (System.currentTimeMillis() - timestamp));
         System.out.println(result);
@@ -112,13 +113,12 @@ bufferedInputStream.close();
 //                    for (int c = zipInputStream.read(); c != -1; c = zipInputStream.read()) {
 //                        result += c;
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    byte[] buffer = new byte[1024];
-                    int count;
+                    byte[] buffer = new byte[100];
                     // reading and writing
-                    while ((count = zipInputStream.read(buffer)) != -1) {
-                        baos.write(buffer, 0, count);
+                    while ((zipInputStream.read(buffer)) != -1) {
+
                         result+=Arrays.toString(buffer);
-                        baos.reset();
+
                     }
                 }
             }
