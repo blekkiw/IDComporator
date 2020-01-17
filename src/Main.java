@@ -73,19 +73,22 @@ public class Main {
     private static String fromFile(String path, String fileName) throws IOException {
         long timestamp = System.currentTimeMillis();
         String filePath = path + fileName;
-//        FileInputStream fileInputStream = new FileInputStream(filePath);
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
+        FileInputStream fileInputStream = new FileInputStream(filePath);
         String result = "";
 //        for (int c = fileInputStream.read(); c != -1; c = fileInputStream.read()) {
 //            result += c;
 //        }
-        String s="";
-        s= bufferedReader.readLine();
-        while (s!=null) {
-            result+=s.getBytes();
-            s=bufferedReader.readLine();
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int count;
+        // reading and writing
+        while ((count = bufferedInputStream.read(buffer)) != -1) {
+            baos.write(buffer, 0, count);
+            result+=Arrays.toString(buffer);
+            baos.reset();
         }
-bufferedReader.close();
+bufferedInputStream.close();
         System.out.println("from file:" + (System.currentTimeMillis() - timestamp));
         System.out.println(result);
         return result;
@@ -101,7 +104,6 @@ bufferedReader.close();
         long timestamp = System.currentTimeMillis();
         FileInputStream fileInputStream = new FileInputStream(path + zipName);
         ZipInputStream zipInputStream = new ZipInputStream(new BufferedInputStream(fileInputStream));
-
         ZipEntry zipEntry = zipInputStream.getNextEntry();
         String result = "";
         while (zipEntry != null) {
@@ -115,7 +117,7 @@ bufferedReader.close();
                     // reading and writing
                     while ((count = zipInputStream.read(buffer)) != -1) {
                         baos.write(buffer, 0, count);
-                        result+=baos.toByteArray();
+                        result+=Arrays.toString(buffer);
                         baos.reset();
                     }
                 }
